@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Traceable test cases for the VWO Login Dashboard, derived from the available test plan and testcase-creator skill.">
+  <title>VWO Login Dashboard | Test Cases</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202b29;
+      --muted: #596866;
+      --paper: #fff;
+      --canvas: #edf2ef;
+      --line: #d8e1dc;
+      --green: #176b56;
+      --green-soft: #e5f1ec;
+      --orange: #bd5d32;
+      --orange-soft: #fbefe8;
+      --yellow: #f2c94c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font: 14px/1.55 "Segoe UI", Tahoma, sans-serif;
+    }
+    .sheet {
+      width: min(100% - 40px, 1100px);
+      margin: 32px auto;
+      background: var(--paper);
+      box-shadow: 0 14px 44px rgba(27, 54, 45, .10);
+    }
+    .cover {
+      padding: 48px 58px 40px;
+      background: var(--green);
+      color: white;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #c3e0d4;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 52px);
+      font-weight: 650;
+      line-height: 1.08;
+    }
+    .subtitle { margin: 14px 0 0; color: #dcece5; font-size: 17px; }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 28px; color: #e5f0eb; font-size: 13px; }
+    .cover-meta strong { color: white; }
+    main { padding: 30px 58px 54px; }
+    h2 { margin: 0 0 14px; color: var(--green); font-size: 23px; line-height: 1.25; }
+    h3 { margin: 22px 0 8px; font-size: 16px; line-height: 1.35; }
+    p { margin: 8px 0 12px; }
+    ul, ol { margin: 7px 0 12px; padding-left: 22px; }
+    li { margin: 4px 0; }
+    section { padding: 22px 0 10px; border-top: 1px solid var(--line); }
+    section:first-child { border-top: 0; }
+    .notice {
+      margin: 0 0 22px;
+      padding: 13px 16px;
+      border-left: 4px solid var(--yellow);
+      background: #fbf7e8;
+      color: #504821;
+    }
+    .meta, .trace, .steps {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th, td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+    th { background: #f3f7f4; font-weight: 650; }
+    .meta th { width: 24%; }
+    .trace th:nth-child(1) { width: 20%; }
+    .trace th:nth-child(2) { width: 48%; }
+    .trace th:nth-child(3) { width: 32%; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .metric { padding: 12px 14px; border: 1px solid var(--line); background: #f7faf8; }
+    .metric strong { display: block; color: var(--green); font-size: 21px; }
+    .metric span { color: var(--muted); font-size: 12px; }
+    .case {
+      margin: 18px 0 26px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--green);
+      break-inside: avoid-page;
+    }
+    .case h3 { margin: 0 0 12px; color: var(--green); font-size: 19px; }
+    .case-id { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .4px; }
+    .tag {
+      display: inline-block;
+      margin: 1px 3px 1px 0;
+      padding: 2px 7px;
+      border-radius: 12px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .tag.priority { background: var(--orange-soft); color: #873b1e; }
+    .case h4 { margin: 14px 0 6px; font-size: 14px; }
+    .steps th:first-child, .steps td:first-child { width: 7%; text-align: center; }
+    .result { padding: 10px 12px; border-left: 3px solid var(--green); background: #f4f8f5; }
+    .execution { margin-top: 12px; color: var(--muted); font-size: 12px; }
+    .small { color: var(--muted); font-size: 12px; }
+    footer { padding: 18px 58px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    @media (max-width: 700px) {
+      .sheet { width: 100%; margin: 0; }
+      .cover, main, footer { padding-left: 22px; padding-right: 22px; }
+      .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      th, td { padding: 6px; }
+    }
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: white; font-size: 10pt; }
+      .sheet { width: auto; margin: 0; box-shadow: none; }
+      .cover { padding: 28px 32px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { padding: 20px 32px 30px; }
+      footer { padding: 12px 32px; }
+      section, .notice, .metric, .case, .result { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <header class="cover">
+      <p class="eyebrow">Quality Assurance · Test Case Specification</p>
+      <h1>VWO Login Dashboard</h1>
+      <p class="subtitle">Executable, prioritized test cases with requirement traceability</p>
+      <div class="cover-meta">
+        <span><strong>Source:</strong> VWO Login Dashboard test plan in this workspace</span>
+        <span><strong>Version:</strong> 1.0</span>
+        <span><strong>Prepared:</strong> 2026-10-23</span>
+        <span><strong>Cases:</strong> 13</span>
+      </div>
+    </header>
+
+    <main>
+      <p class="notice"><strong>Usage note:</strong> Requirement IDs below are provisional traceability labels created from the available test plan because original PRD requirement IDs were not provided. Confirm them, environment details, data, and TBD behaviors with the product team before sign-off. Use approved non-production environments only; do not use the live login endpoint without explicit authorization.</p>
+
+      <section id="document-header">
+        <h2>Document Header</h2>
+        <table class="meta">
+          <tbody>
+            <tr><th>Project / Product</th><td>VWO</td></tr>
+            <tr><th>Module / Feature</th><td>Login, authentication, and account recovery</td></tr>
+            <tr><th>Requirement / User Story ID</th><td>Source PRD IDs not supplied; see provisional REQ-LOGIN IDs below</td></tr>
+            <tr><th>Author</th><td>QA team (name not supplied)</td></tr>
+            <tr><th>Date</th><td>2026-10-23</td></tr>
+            <tr><th>Version</th><td>1.0</td></tr>
+            <tr><th>Environment / Build</th><td>QA environment / build TBD by project team</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="summary">
+        <h2>Summary</h2>
+        <p><strong>Scope:</strong> Core email/password login, validation and failure handling, password recovery, remember-me and session behavior, accessible and responsive presentation, secure transport, and login-page performance.</p>
+        <p><strong>Test types covered:</strong> Smoke, sanity, regression, exploratory, functional, negative, boundary/edge, integration, security, UI, accessibility, performance, and compatibility.</p>
+        <div class="summary-grid" aria-label="Test case counts by priority">
+          <div class="metric"><strong>13</strong><span>Total cases</span></div>
+          <div class="metric"><strong>6</strong><span>P1 · Critical</span></div>
+          <div class="metric"><strong>7</strong><span>P2 · High</span></div>
+          <div class="metric"><strong>0</strong><span>P3 · Medium</span></div>
+          <div class="metric"><strong>0</strong><span>P4 · Low</span></div>
+        </div>
+        <p class="small">Detailed error copy, password policy, timeout durations, rate-limit thresholds, and several environment settings remain product/engineering decisions.</p>
+      </section>
+
+      <section id="questions">
+        <h2>Assumptions &amp; Open Questions</h2>
+        <ol>
+          <li>What are the approved QA and pre-production URLs, build identifiers, supported browser/device versions, and non-production accounts?</li>
+          <li>What are the password rules, exact validation/error messages, authentication failure policy, and rate-limit/lockout thresholds?</li>
+          <li>What should remember-me persist, for how long, and what are the configured session idle/absolute timeout values?</li>
+          <li>What reset-token validity, expiry, reuse, and password-change rules should be verified?</li>
+          <li>Which 2FA, enterprise SSO, and social login providers are enabled for this release? These conditional flows are excluded until configuration is confirmed.</li>
+          <li>What exact load profile, standard connection profile, and measurement method define the login page-load target of under 2 seconds?</li>
+          <li>What are the approved assistive-technology combinations and WCAG 2.1 AA acceptance process?</li>
+        </ol>
+        <p class="small">TBD items are intentionally not replaced with assumed product behavior. Resolve relevant questions before test execution or case sign-off.</p>
+      </section>
+
+      <section id="traceability">
+        <h2>Traceability Matrix</h2>
+        <table class="trace">
+          <thead><tr><th>Requirement ID</th><th>Description (derived from available test plan)</th><th>Test Case IDs</th></tr></thead>
+          <tbody>
+            <tr><td>REQ-LOGIN-01</td><td>Authenticate users with email and password and transition successful users to the personalized dashboard.</td><td>TC-LOGIN-001, TC-LOGIN-004</td></tr>
+            <tr><td>REQ-LOGIN-02</td><td>Validate required fields and email format, with actionable field feedback.</td><td>TC-LOGIN-002, TC-LOGIN-003</td></tr>
+            <tr><td>REQ-LOGIN-03</td><td>Provide password recovery and secure reset-token handling.</td><td>TC-LOGIN-005, TC-LOGIN-006</td></tr>
+            <tr><td>REQ-LOGIN-04</td><td>Support remember-me behavior and secure session creation, timeout, and expiration.</td><td>TC-LOGIN-007, TC-LOGIN-008</td></tr>
+            <tr><td>REQ-LOGIN-05</td><td>Meet keyboard and screen-reader usability and WCAG 2.1 AA expectations.</td><td>TC-LOGIN-009</td></tr>
+            <tr><td>REQ-LOGIN-06</td><td>Present responsive, touch-friendly login experiences on supported mobile platforms.</td><td>TC-LOGIN-010</td></tr>
+            <tr><td>REQ-LOGIN-07</td><td>Protect authentication data in transit and avoid sensitive-data exposure.</td><td>TC-LOGIN-011</td></tr>
+            <tr><td>REQ-LOGIN-08</td><td>Load the login page in under 2 seconds on the agreed standard connection profile.</td><td>TC-LOGIN-012</td></tr>
+            <tr><td>REQ-LOGIN-09</td><td>Apply protection against repeated failed authentication attempts.</td><td>TC-LOGIN-013</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="cases">
+        <h2>Detailed Test Cases</h2>
+
+        <article class="case" id="TC-LOGIN-001">
+          <h3><span class="case-id">TC-LOGIN-001</span> · Sign in with valid credentials</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-001</td></tr>
+            <tr><th>Requirement ID</th><td>REQ-LOGIN-01</td></tr>
+            <tr><th>Category</th><td><span class="tag">Functional</span><span class="tag">Integration</span></td></tr>
+            <tr><th>Priority</th><td><span class="tag priority">P1 Critical</span></td></tr>
+            <tr><th>Test Type</th><td>Smoke / Regression</td></tr>
+            <tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA environment is available; a registered, active, non-production user account is configured.</td></tr>
+            <tr><th>Test Data</th><td>Approved QA account email and password; values supplied securely by the project team, not stored in this document.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4>
+          <table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody>
+            <tr><td>1</td><td>Open the approved QA login page.</td></tr>
+            <tr><td>2</td><td>Enter the active account's valid email and password.</td></tr>
+            <tr><td>3</td><td>Submit the login form once and observe loading and completion behavior.</td></tr>
+          </tbody></table>
+          <h4>Expected Result</h4><p class="result">Authentication succeeds, the user reaches the personalized VWO dashboard, and a valid authenticated session is established. Exact success feedback and dashboard destination are TBD if not defined by the release requirements.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Sign out and clean up the test session after evidence is captured.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-002">
+          <h3><span class="case-id">TC-LOGIN-002</span> · Submit the login form with required fields empty</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-002</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-02</td></tr>
+            <tr><th>Category</th><td><span class="tag">Negative</span><span class="tag">Boundary</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P1 Critical</span></td></tr>
+            <tr><th>Test Type</th><td>Sanity / Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA login page is open; no user is authenticated.</td></tr><tr><th>Test Data</th><td>Email: empty; password: empty.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Leave both email and password fields empty.</td></tr><tr><td>2</td><td>Activate the login submit control.</td></tr><tr><td>3</td><td>Observe field feedback and authentication state.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The form does not authenticate or create a session, and required-field feedback is presented in accordance with the approved validation specification. Exact message text and focus behavior are TBD.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Repeat separately with only email empty and only password empty if field-specific coverage is required.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-003">
+          <h3><span class="case-id">TC-LOGIN-003</span> · Reject a malformed email address</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-003</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-02</td></tr>
+            <tr><th>Category</th><td><span class="tag">Negative</span><span class="tag">Boundary</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA login page is open; no user is authenticated.</td></tr><tr><th>Test Data</th><td>Email: <code>not-an-email</code>; password: any non-empty placeholder.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Enter the malformed email value and a non-empty password.</td></tr><tr><td>2</td><td>Move focus away from the email field, then submit the form if submission remains available.</td></tr><tr><td>3</td><td>Observe validation feedback and whether an authentication request is made, using approved test tooling.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The malformed value is rejected according to the agreed validation rules, actionable feedback is shown, and no authenticated session is created. Exact accepted email syntax and feedback copy are TBD.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Do not use real user data.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-004">
+          <h3><span class="case-id">TC-LOGIN-004</span> · Handle an invalid credential attempt safely</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-004</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-01</td></tr>
+            <tr><th>Category</th><td><span class="tag">Negative</span><span class="tag">Security</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P1 Critical</span></td></tr>
+            <tr><th>Test Type</th><td>Smoke / Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA environment is available; a test account exists and is not locked or rate-limited.</td></tr><tr><th>Test Data</th><td>Known QA account email; intentionally incorrect password that does not match that account.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Enter the QA account email and incorrect password.</td></tr><tr><td>2</td><td>Submit the form once.</td></tr><tr><td>3</td><td>Observe the feedback, page state, and whether access to protected dashboard content is granted.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">Authentication is denied and no authenticated session or protected dashboard access is granted. The UI presents an actionable failure message without exposing secrets; exact wording and account-enumeration behavior require product/security confirmation.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Avoid repeated attempts that could trigger a lockout.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-005">
+          <h3><span class="case-id">TC-LOGIN-005</span> · Request password recovery for a registered account</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-005</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-03</td></tr>
+            <tr><th>Category</th><td><span class="tag">Functional</span><span class="tag">Integration</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P1 Critical</span></td></tr>
+            <tr><th>Test Type</th><td>Sanity / Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA recovery flow is configured; registered test mailbox is accessible to the tester.</td></tr><tr><th>Test Data</th><td>Email: registered non-production account whose mailbox is controlled by the test team.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Open the forgot-password flow from the login page.</td></tr><tr><td>2</td><td>Submit the registered test account email.</td></tr><tr><td>3</td><td>Observe confirmation feedback and check the approved test mailbox for the recovery message.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The recovery request is accepted and follows the configured email-based reset flow. Confirmation content, delivery-time target, and privacy behavior are TBD unless defined in the approved requirements. Reset links/tokens must be handled as secrets.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Use only test mailbox infrastructure; redact reset links from evidence.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-006">
+          <h3><span class="case-id">TC-LOGIN-006</span> · Reject an expired or previously used password-reset token</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-006</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-03</td></tr>
+            <tr><th>Category</th><td><span class="tag">Negative</span><span class="tag">Edge</span><span class="tag">Security</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>QA reset-token lifecycle is documented; a controlled test account and approved expired/consumed token fixture are available.</td></tr><tr><th>Test Data</th><td>Expired token or token already consumed in a prior test; no real account tokens.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Open the reset flow using the approved expired or previously used test token.</td></tr><tr><td>2</td><td>Attempt to set a new password.</td></tr><tr><td>3</td><td>Observe the result and verify whether the account password changed.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The invalid token cannot authorize a password change; the account remains unchanged and the UI provides a recovery path. Token validity duration, reuse policy, and exact copy are TBD.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Never include the token value in screenshots, logs, or defect reports.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-007">
+          <h3><span class="case-id">TC-LOGIN-007</span> · Verify the configured remember-me behavior</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-007</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-04</td></tr>
+            <tr><th>Category</th><td><span class="tag">Functional</span><span class="tag">Security</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Remember-me is enabled in the approved QA build; product has confirmed expected persistence and expiry behavior.</td></tr><tr><th>Test Data</th><td>Active non-production QA account; browser profile reserved for this test.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Sign in with valid QA credentials and select remember-me.</td></tr><tr><td>2</td><td>Close and reopen the browser, then revisit the approved QA application.</td></tr><tr><td>3</td><td>Compare the resulting authentication state with the agreed persistence policy and inspect sign-out behavior.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">Persistence matches the product-approved remember-me policy, and sign-out or expiry invalidates access as specified. Exact persistence duration, storage mechanism, and expected post-restart state are TBD until confirmed.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Clear the dedicated browser profile after execution.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-008">
+          <h3><span class="case-id">TC-LOGIN-008</span> · Enforce session expiration on a protected page</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-008</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-04</td></tr>
+            <tr><th>Category</th><td><span class="tag">Functional</span><span class="tag">Security</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P1 Critical</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>QA session timeout is configured and its duration is confirmed; a test account can access a protected dashboard route.</td></tr><tr><th>Test Data</th><td>Active QA account; approved protected dashboard route; configured timeout interval.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Authenticate and open a protected dashboard page.</td></tr><tr><td>2</td><td>Remain idle for the configured session timeout period plus the agreed tolerance.</td></tr><tr><td>3</td><td>Refresh or navigate to the protected page and observe access and recovery behavior.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">Expired authentication cannot access protected content; the user is redirected to or prompted to use the approved login flow. Timeout duration, tolerance, and return-to-page behavior are TBD until confirmed.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Verify the protected content is not exposed through refresh or browser history after expiration.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-009">
+          <h3><span class="case-id">TC-LOGIN-009</span> · Operate and understand the login form with keyboard and assistive technology</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-009</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-05</td></tr>
+            <tr><th>Category</th><td><span class="tag">Accessibility</span><span class="tag">UI</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Exploratory / Regression</td></tr><tr><th>Automation</th><td>Manual</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA environment and supported screen reader/browser combination are available; accessibility acceptance criteria are agreed.</td></tr><tr><th>Test Data</th><td>Keyboard only; screen reader enabled; empty and invalid form states.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Navigate the login page using only keyboard controls and inspect focus order and visibility.</td></tr><tr><td>2</td><td>Use the screen reader to identify field names, instructions, controls, and page feedback.</td></tr><tr><td>3</td><td>Submit an invalid form and verify that relevant validation feedback is announced and associated with its field.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">Login controls are keyboard-operable, focus remains visible and logical, and labels and validation feedback are programmatically available to assistive technology. Evaluate against the approved WCAG 2.1 AA criteria; exact tool/browser matrix is TBD.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Record assistive technology, browser, OS, and relevant WCAG criterion for each finding.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-010">
+          <h3><span class="case-id">TC-LOGIN-010</span> · Use the login form on a supported mobile viewport</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-010</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-06</td></tr>
+            <tr><th>Category</th><td><span class="tag">UI</span><span class="tag">Compatibility</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA environment is available on a supported Android/Chrome or iOS/Safari device and viewport.</td></tr><tr><th>Test Data</th><td>Supported mobile device/browser matrix from the project team; non-production test account.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Open the QA login page on the selected supported mobile device.</td></tr><tr><td>2</td><td>Inspect the page in portrait and landscape orientations; scroll and activate form controls by touch.</td></tr><tr><td>3</td><td>Complete the login form and submit it using the on-screen keyboard.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The login experience remains legible and usable without clipped controls or unintended horizontal scrolling, and touch/keyboard interactions allow the supported login flow to complete. Exact viewport/device coverage is TBD by the project team.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Record device model, OS/browser version, orientation, and viewport dimensions.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-011">
+          <h3><span class="case-id">TC-LOGIN-011</span> · Protect credentials during login transmission</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-011</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-07</td></tr>
+            <tr><th>Category</th><td><span class="tag">Security</span><span class="tag">Integration</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P1 Critical</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Manual / approved security tooling</td></tr>
+            <tr><th>Preconditions</th><td>Testing is authorized in QA; approved test account and security test procedure are available.</td></tr><tr><th>Test Data</th><td>Non-production test credentials; authorized browser/network inspection tools.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Open the QA login page and verify the approved HTTPS entry point and certificate status.</td></tr><tr><td>2</td><td>Submit test credentials while observing the authorized request and response flow.</td></tr><tr><td>3</td><td>Review approved browser-visible diagnostics and test logs for accidental credential exposure; do not probe systems outside the authorized scope.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">Authentication data is transmitted only through the approved secure transport, is not exposed in URLs or user-visible diagnostics, and is not written in plaintext to the approved test logs. Confirm storage/control requirements with the security specification; do not infer backend storage behavior from this client-side test.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Redact credentials, cookies, and tokens from all evidence and reports.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-012">
+          <h3><span class="case-id">TC-LOGIN-012</span> · Meet the login-page load target on a standard connection</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-012</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-08</td></tr>
+            <tr><th>Category</th><td><span class="tag">Performance</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Sanity / Regression</td></tr><tr><th>Automation</th><td>Automation candidate</td></tr>
+            <tr><th>Preconditions</th><td>Approved QA/pre-production environment, standard connection profile, measurement definition, and test window are confirmed.</td></tr><tr><th>Test Data</th><td>Agreed network profile and measurement tool; exact browser/device, sample count, and cache state from performance plan.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Configure the agreed standard connection profile and measurement conditions.</td></tr><tr><td>2</td><td>Measure login-page load time using the approved metric and repeat for the agreed sample count.</td></tr><tr><td>3</td><td>Compare each result and the agreed aggregate to the under-2-second target.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The login page meets the PRD target of under 2 seconds under the agreed standard connection profile and measurement definition. Profile, metric, sample count, and aggregation method must be confirmed before execution.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Attach timing data with environment/build and test conditions; avoid reporting a pass/fail before the measurement method is agreed.</p>
+        </article>
+
+        <article class="case" id="TC-LOGIN-013">
+          <h3><span class="case-id">TC-LOGIN-013</span> · Apply the configured limit to repeated failed sign-in attempts</h3>
+          <table class="meta"><tbody>
+            <tr><th>Test Case ID</th><td>TC-LOGIN-013</td></tr><tr><th>Requirement ID</th><td>REQ-LOGIN-09</td></tr>
+            <tr><th>Category</th><td><span class="tag">Security</span><span class="tag">Boundary</span></td></tr><tr><th>Priority</th><td><span class="tag priority">P2 High</span></td></tr>
+            <tr><th>Test Type</th><td>Regression</td></tr><tr><th>Automation</th><td>Manual / controlled automation</td></tr>
+            <tr><th>Preconditions</th><td>Authorized QA environment; documented rate-limit/lockout threshold and reset window; dedicated test account and test owner approval.</td></tr><tr><th>Test Data</th><td>Dedicated non-production account and incorrect password; approved attempt count and interval from the security specification.</td></tr>
+          </tbody></table>
+          <h4>Test Steps</h4><table class="steps"><thead><tr><th>#</th><th>Action</th></tr></thead><tbody><tr><td>1</td><td>Submit the agreed number and cadence of invalid authentication attempts against the dedicated QA account.</td></tr><tr><td>2</td><td>Observe responses at the configured threshold and immediately after it.</td></tr><tr><td>3</td><td>Verify the response matches the documented throttling/lockout policy and the account can recover as specified.</td></tr></tbody></table>
+          <h4>Expected Result</h4><p class="result">The service enforces the approved repeated-failure protection without granting access, and the user receives the documented recovery guidance. Threshold, window, response behavior, and recovery policy are TBD; do not execute repeated attempts until approved values and test-account recovery are confirmed.</p>
+          <p class="execution"><strong>Actual Result:</strong> To be filled during execution · <strong>Status:</strong> Not Run · <strong>Defect ID:</strong> —<br><strong>Notes / Postconditions:</strong> Stop immediately if the environment or account behavior differs from the approved test procedure.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer>VWO Login Dashboard Test Cases · Derived from the available workspace test plan. Provisional requirement labels and TBD items require stakeholder confirmation.</footer>
+  </div>
+</body>
+</html>
