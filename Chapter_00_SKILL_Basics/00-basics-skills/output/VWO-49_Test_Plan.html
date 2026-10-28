@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Draft QA test plan for VWO-49: SSO and passkey login options.">
+  <title>VWO-49 | SSO and Passkey Login Test Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202b29;
+      --muted: #596866;
+      --paper: #fff;
+      --line: #d8e1dc;
+      --green: #176b56;
+      --green-soft: #e5f1ec;
+      --orange: #a64b29;
+      --orange-soft: #fbefe8;
+      --yellow: #f2c94c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #edf2ef;
+      color: var(--ink);
+      font: 14px/1.5 "Segoe UI", Tahoma, sans-serif;
+    }
+    .sheet {
+      width: min(100% - 32px, 1040px);
+      margin: 24px auto;
+      background: var(--paper);
+      box-shadow: 0 12px 36px rgba(27, 54, 45, .10);
+    }
+    .cover {
+      padding: 38px 52px 32px;
+      background: var(--green);
+      color: #fff;
+    }
+    .brand { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .brand img { width: 76px; height: 76px; object-fit: contain; background: #fff; border-radius: 50%; }
+    .brand-name { font-size: 15px; font-weight: 700; }
+    .brand-detail { color: #dcece5; font-size: 12px; }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #c3e0d4;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+    h1 { max-width: 760px; margin: 0; font-size: 38px; line-height: 1.1; font-weight: 650; }
+    .subtitle { margin: 12px 0 0; color: #dcece5; font-size: 17px; }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 24px; color: #e5f0eb; font-size: 12px; }
+    .cover-meta strong { color: #fff; }
+    main { padding: 30px 52px 42px; }
+    .notice { margin: 0 0 20px; padding: 12px 16px; border-left: 4px solid var(--yellow); background: #fbf7e8; color: #504821; }
+    h2 { margin: 0 0 12px; color: var(--green); font-size: 21px; line-height: 1.25; }
+    h3 { margin: 17px 0 7px; font-size: 15px; }
+    p { margin: 7px 0 10px; }
+    ul, ol { margin: 6px 0 12px; padding-left: 21px; }
+    li { margin: 3px 0; }
+    section { padding: 20px 0 8px; border-top: 1px solid var(--line); }
+    section:first-of-type { border-top: 0; }
+    .lead { font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .panel { padding: 13px 15px; border: 1px solid var(--line); border-top: 3px solid var(--green); }
+    .panel h3 { margin-top: 0; }
+    .callout { padding: 11px 14px; border-left: 3px solid var(--orange); background: var(--orange-soft); }
+    .small { color: var(--muted); font-size: 12px; }
+    table { width: 100%; margin: 10px 0 15px; border-collapse: collapse; font-size: 11.5px; }
+    th, td { padding: 7px 8px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #edf4f0; color: #24473c; font-weight: 700; }
+    .status { white-space: nowrap; font-weight: 700; }
+    .pending { color: #8a5a00; }
+    .priority { white-space: nowrap; font-weight: 700; }
+    .review { margin-top: 18px; padding: 16px; border: 2px solid var(--orange); background: #fffaf7; }
+    .review h2 { color: var(--orange); }
+    footer { padding: 14px 52px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    @media (max-width: 700px) {
+      .sheet { width: 100%; margin: 0; }
+      .cover { padding: 30px 22px; }
+      main { padding: 24px 22px 32px; }
+      footer { padding: 14px 22px; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+      table { font-size: 10.5px; }
+    }
+    @media print {
+      @page { size: A4; margin: 14mm 13mm; }
+      body { background: #fff; font-size: 9.5pt; }
+      .sheet { width: auto; margin: 0; box-shadow: none; }
+      .cover { padding: 18mm 14mm 13mm; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { padding: 10mm 14mm 12mm; }
+      footer { padding: 5mm 14mm; }
+      section, .panel, table tr { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      th, .notice, .review { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <header class="cover">
+      <div class="brand">
+        <img src="../../01-advance-skills/testplan-creator-skill_a/misc/company.png" alt="The Testing Academy logo">
+        <div>
+          <div class="brand-name">The Testing Academy</div>
+          <div class="brand-detail">Company context supplied with the test-plan skill</div>
+        </div>
+      </div>
+      <p class="eyebrow">Quality Assurance · Test Plan · Draft for Review</p>
+      <h1>VWO-49: Add Passkey and SSO Login Options</h1>
+      <p class="subtitle">Test plan for authentication options on the VWO login page</p>
+      <div class="cover-meta">
+        <span><strong>Issue:</strong> VWO-49</span>
+        <span><strong>Project:</strong> VWO Project</span>
+        <span><strong>Epic:</strong> Authentication Enhancements</span>
+        <span><strong>Prepared:</strong> 28 October 2026</span>
+        <span><strong>Issue status:</strong> To Do (ticket export)</span>
+        <span><strong>Plan status:</strong> Draft — pending human review</span>
+      </div>
+    </header>
+    <main>
+      <p class="notice"><strong>Review status:</strong> This is a proposed test plan, not an approved or final artifact. Ticket content and historical comments are taken from the supplied VWO-49 export. Questions and unconfirmed details are kept open rather than assumed.</p>
+
+      <section>
+        <h2>1. Objective and Company Context</h2>
+        <p class="lead">Verify that users can start and complete VWO login using the newly presented Single Sign-On (SSO) and passkey options, receive safe and understandable failure guidance, and use the options on supported configurations without exposing sensitive authentication data.</p>
+        <div class="grid">
+          <div class="panel">
+            <h3>Supplied organization context</h3>
+            <p>The company notes describe VWO as a Bingify product at vwo.com, focused on A/B testing for websites, with approximately 5,000 employees. This context is supplied in the skill materials; it is not independently verified.</p>
+          </div>
+          <div class="panel">
+            <h3>Test objective</h3>
+            <p>Assess the new login entry points and the SSO/WebAuthn authentication journeys in scope, plus security, compatibility, accessibility, and responsive behavior directly related to these options.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Ticket Summary and Scope</h2>
+        <p><strong>User story:</strong> As a user, log in using either Passkey or SSO to access an account more securely and conveniently without relying solely on email/password authentication.</p>
+        <p><strong>Ticket metadata:</strong> Story; VWO Project; status To Do; priority appears as Medium in the issue header and High in the description; no components, fix version, sprint, or assignee are supplied. Epic link is Authentication Enhancements.</p>
+        <div class="grid">
+          <div class="panel">
+            <h3>In scope</h3>
+            <ul>
+              <li>Visibility and placement of “Sign in using SSO” and “Sign in with Passkey” beneath “Sign in with Google”.</li>
+              <li>Configured SSO success, failure, user feedback, and dashboard redirect.</li>
+              <li>Registered passkey success, failure, no-passkey fallback/guidance, and unsupported browser/device handling.</li>
+              <li>Supported browser/device and configured identity-provider compatibility; secure OAuth/SAML/WebAuthn behavior.</li>
+              <li>Responsive and accessible presentation; sensitive-data exposure checks in UI and network logs.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Out of scope / conditional</h3>
+            <ul>
+              <li>Passkey registration, explicitly covered by another story.</li>
+              <li>SSO provider configuration, explicitly out of scope. Use only configured providers and test-environment setup.</li>
+              <li>Testing provider administration or the broader VWO product beyond login and dashboard handoff.</li>
+            </ul>
+            <p class="small">Existing email/password and Google login are included only as regression checks where they share the login page or could be affected by placement.</p>
+          </div>
+        </div>
+        <h3>Acceptance criteria reference</h3>
+        <table>
+          <thead><tr><th>Ref</th><th>Ticket requirement</th></tr></thead>
+          <tbody>
+            <tr><td>AC-1</td><td>Both named buttons are visible on login, below “Sign in with Google”.</td></tr>
+            <tr><td>AC-2</td><td>Valid SSO credentials authenticate the user and redirect to the dashboard; invalid credentials produce an appropriate error.</td></tr>
+            <tr><td>AC-3</td><td>A verified registered passkey logs the user in and redirects to the dashboard; no passkey produces fallback or guidance.</td></tr>
+            <tr><td>AC-4</td><td>Appropriate errors are displayed for failed SSO, failed passkey authentication, and unsupported browser/device for passkeys.</td></tr>
+            <tr><td>AC-5</td><td>Passkey works on supported browsers/devices; SSO works across all configured identity providers.</td></tr>
+            <tr><td>AC-6</td><td>Authentication follows secure OAuth/SAML/WebAuthn protocols; sensitive data is not exposed in UI or network logs.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>3. Requirement Gap Analysis — Gaps &amp; Questions for the Author</h2>
+        <p class="small">Status key: Present = explicitly stated; Ambiguous = partly stated or lacking a measurable definition; Missing = not specified in the ticket. Resolve or record owner-approved answers before test-case sign-off.</p>
+        <table>
+          <thead><tr><th>Ref</th><th>Area</th><th>Status</th><th>Finding / question for author</th></tr></thead>
+          <tbody>
+            <tr><td>—</td><td>User goal and core flow</td><td class="status">Present</td><td>Story and SSO/passkey success goals are supplied.</td></tr>
+            <tr><td>—</td><td>Acceptance criteria</td><td class="status">Present</td><td>Six high-level criteria are present; detailed pass/fail behavior is not complete.</td></tr>
+            <tr><td>Q-1</td><td>Button order and exact layout</td><td class="status">Ambiguous</td><td>Are SSO and Passkey order, spacing, labels, and visual design prescribed beyond appearing below Google? Which approved design is authoritative?</td></tr>
+            <tr><td>Q-2</td><td>SSO identity and success conditions</td><td class="status">Ambiguous</td><td>Which configured IdPs, protocols, tenant/account types, and valid test accounts are in scope? What exact URL/state constitutes dashboard redirect?</td></tr>
+            <tr><td>Q-3</td><td>SSO failure states</td><td class="status">Ambiguous</td><td>Define expected behavior for invalid credentials, unknown tenant, IdP outage/timeout, user cancellation, and denied consent. Should failures remain on login?</td></tr>
+            <tr><td>Q-4</td><td>Passkey platform support</td><td class="status">Ambiguous</td><td>Provide supported browser, OS, device, authenticator, and platform versions. Define expected fallback for unsupported configurations.</td></tr>
+            <tr><td>Q-5</td><td>Passkey state/error behavior</td><td class="status">Ambiguous</td><td>Clarify expected response for no credential, user cancellation, failed verification, authenticator unavailable, timeout, and retry.</td></tr>
+            <tr><td>Q-6</td><td>Test data and setup</td><td class="status">Missing</td><td>Provide approved non-production accounts for SSO success/failure, configured IdP tenants, and account with/without an already-registered passkey. Registration itself remains out of scope.</td></tr>
+            <tr><td>Q-7</td><td>Environment/build</td><td class="status">Missing</td><td>Provide QA/staging URL, build, access, feature-flag state, and environment-specific provider details. Ticket comments mention app.vwo.com and app.wingify.com/#/login; which is the approved target?</td></tr>
+            <tr><td>Q-8</td><td>Security details</td><td class="status">Ambiguous</td><td>Confirm required protocol/profile, expected log redaction, applicable security test depth, and any approved audit standard. No credential or token values should be captured as evidence.</td></tr>
+            <tr><td>Q-9</td><td>Accessibility and responsive criteria</td><td class="status">Missing</td><td>Specify accessibility standard/level, assistive-technology matrix, supported viewport sizes, and expected keyboard/focus behavior.</td></tr>
+            <tr><td>Q-10</td><td>Performance, availability, localization</td><td class="status">Missing</td><td>Are there response-time/load targets, availability criteria, languages, or locale-specific requirements for these authentication options?</td></tr>
+            <tr><td>Q-11</td><td>Regression, rollback, flags</td><td class="status">Missing</td><td>Which existing login methods and supported release paths must be regression-tested? Is a feature flag or rollback behavior applicable?</td></tr>
+            <tr><td>Q-12</td><td>Priority / ownership / release gates</td><td class="status">Ambiguous</td><td>Ticket header says Medium while description says High. Confirm priority, QA/product approver, sprint/date, and exit thresholds; none are supplied.</td></tr>
+            <tr><td>E-1</td><td>Historical execution evidence</td><td class="status">Present</td><td>Ticket comments from 10–20 Oct 2026 repeatedly report 0 passed, 0 failed, 4 blocked for four automated checks. Confirm current build/environment access and whether these results still apply before retesting.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>4. Risk-Prioritized Test Scenarios</h2>
+        <p class="small">Priorities are proposed relative risk, not the ticket’s priority field. P0 covers core access and security failures; P1 covers important compatibility/error paths; P2 covers supplementary usability and regression coverage. Scenarios are not executed test cases.</p>
+        <table>
+          <thead><tr><th>ID</th><th>Priority</th><th>Type</th><th>Scenario / expected observation</th><th>Trace</th></tr></thead>
+          <tbody>
+            <tr><td>TS-01</td><td class="priority">P0</td><td>Positive / UI</td><td>Open login in the approved environment; verify both exact-label options are visible below Google. Record order/layout without assuming unspecified order.</td><td>AC-1; Q-1</td></tr>
+            <tr><td>TS-02</td><td class="priority">P0</td><td>Positive / SSO</td><td>Start SSO with an approved valid account through each configured IdP; verify successful authentication and dashboard redirect.</td><td>AC-2, AC-5; Q-2, Q-6</td></tr>
+            <tr><td>TS-03</td><td class="priority">P1</td><td>Negative / SSO</td><td>Submit an approved invalid SSO account/credential; verify safe, actionable error behavior and no authenticated dashboard access.</td><td>AC-2, AC-4; Q-3, Q-6</td></tr>
+            <tr><td>TS-04</td><td class="priority">P1</td><td>Negative / SSO</td><td>Exercise agreed IdP timeout/unavailable, user cancellation, and denied-consent cases; verify defined recovery, no partial session, and no sensitive detail disclosure.</td><td>AC-4, AC-6; Q-3, Q-8</td></tr>
+            <tr><td>TS-05</td><td class="priority">P0</td><td>Positive / Passkey</td><td>Use a test account with an already-registered supported passkey and verify user verification, successful login, and dashboard redirect.</td><td>AC-3, AC-5; Q-4, Q-6</td></tr>
+            <tr><td>TS-06</td><td class="priority">P1</td><td>Negative / Passkey</td><td>Use an account with no registered passkey; verify the approved fallback/guidance and that no login session is created.</td><td>AC-3; Q-5, Q-6</td></tr>
+            <tr><td>TS-07</td><td class="priority">P1</td><td>Negative / Passkey</td><td>Cancel or fail authenticator verification and exercise timeout/retry where defined; verify correct error/recovery without a partial session.</td><td>AC-4; Q-5</td></tr>
+            <tr><td>TS-08</td><td class="priority">P1</td><td>Boundary / compatibility</td><td>Open the passkey option on an unsupported browser/device; verify the required unsupported message/fallback and continued access to other login options.</td><td>AC-4, AC-5; Q-4</td></tr>
+            <tr><td>TS-09</td><td class="priority">P1</td><td>Compatibility</td><td>Run supported passkey browser/OS/authenticator combinations and all configured IdPs; record each combination and result.</td><td>AC-5; Q-2, Q-4</td></tr>
+            <tr><td>TS-10</td><td class="priority">P0</td><td>Security</td><td>Inspect approved UI/network evidence for exposed credentials, assertions, access tokens, passkey challenge/response secrets, or sensitive account data; verify secure protocols and transport as specified.</td><td>AC-6; Q-8</td></tr>
+            <tr><td>TS-11</td><td class="priority">P1</td><td>Session / security</td><td>For failed, cancelled, and repeated attempts, verify no unintended authenticated session or cross-account access. Do not conduct unapproved brute-force or destructive tests.</td><td>AC-2–AC-4, AC-6; Q-3, Q-5, Q-8</td></tr>
+            <tr><td>TS-12</td><td class="priority">P1</td><td>Accessibility</td><td>Navigate to and activate both controls using keyboard only; check focus order/visibility, accessible names, and announcement of errors/guidance against the agreed standard.</td><td>AC-1, AC-4; Q-9</td></tr>
+            <tr><td>TS-13</td><td class="priority">P2</td><td>Responsive / usability</td><td>Check both options and messages at agreed viewport sizes, zoom levels, and touch layouts; verify controls remain visible, operable, and non-overlapping.</td><td>AC-1, AC-4; Q-9</td></tr>
+            <tr><td>TS-14</td><td class="priority">P1</td><td>Regression</td><td>Verify existing Google and email/password entry points remain available and operable; ensure new options do not obscure, misroute, or break them.</td><td>AC-1; Q-11</td></tr>
+            <tr><td>TS-15</td><td class="priority">P1</td><td>Failure / resilience</td><td>Repeat each failure path after recovery/retry; verify the user can safely return to login and initiate another available sign-in method.</td><td>AC-2–AC-4; Q-3, Q-5</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>5. Test Data and Environment</h2>
+        <ul>
+          <li><strong>Environment:</strong> Approved non-production QA/staging environment and build are TBD. The ticket mentions app.vwo.com and app.wingify.com/#/login in historical reports; do not test production unless explicitly authorized.</li>
+          <li><strong>SSO data:</strong> Approved test identities for successful and failed authentication, each configured IdP/tenant, and any needed account state. Provider configuration is out of scope; environment setup is a prerequisite.</li>
+          <li><strong>Passkey data:</strong> One approved test account with an already-registered passkey and one without. Provisioning/registration is outside this story and must be prepared separately.</li>
+          <li><strong>Compatibility matrix:</strong> Supported browser, operating system, device, authenticator, and version list is TBD. Include at least one explicitly unsupported configuration once the product team identifies it.</li>
+          <li><strong>Roles/permissions:</strong> The ticket does not define roles. Confirm account entitlement and expected dashboard access for each test identity before execution.</li>
+          <li><strong>Evidence:</strong> Record environment/build, sanitized screenshots, test identity alias, browser/device, timestamps, and result. Never store passwords, tokens, assertions, passkey material, or other secrets in logs/evidence.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. Strategy, Entry/Exit Criteria, and Deliverables</h2>
+        <h3>Approach</h3>
+        <ol>
+          <li>Review this draft with product, QA, engineering, and identity-provider owners; resolve blocking questions and approve scenario priorities.</li>
+          <li>Confirm environment, build, access, feature state, test identities, configured providers, and supported-device matrix; run smoke checks.</li>
+          <li>Exercise the UI and core success paths first, followed by failures, security/privacy checks, compatibility, accessibility, responsive behavior, and regression.</li>
+          <li>Record results and defects in the project’s approved tracker; retest fixes and run focused regression. Report blocked tests with a named dependency, not as pass/fail.</li>
+        </ol>
+        <div class="grid">
+          <div class="panel">
+            <h3>Entry criteria</h3>
+            <ul>
+              <li>Plan/scenarios reviewed; critical ambiguities resolved or explicitly accepted by the owner.</li>
+              <li>Approved non-production build and environment reachable; identity-provider test setup and test accounts ready.</li>
+              <li>Supported platform matrix, access, and execution evidence process agreed.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Exit criteria (proposed)</h3>
+            <ul>
+              <li>All approved P0 scenarios executed; other planned coverage completed or blockers documented and accepted.</li>
+              <li>No open critical/high defects for agreed scope, unless a named stakeholder accepts documented risk.</li>
+              <li>Security, compatibility, accessibility, defect, and test-result summaries shared; release/sign-off decision recorded by owner.</li>
+            </ul>
+            <p class="small">Numerical pass-rate and defect thresholds are not stated in the ticket and require owner approval.</p>
+          </div>
+        </div>
+        <h3>Deliverables and defect handling</h3>
+        <ul>
+          <li>Approved plan and resolved requirement questions; prioritized scenario/test-case traceability to AC-1–AC-6.</li>
+          <li>Execution results with environment/build, test matrix, evidence references, defects, retests, blockers, and residual risks.</li>
+          <li>Report reproducible defects in JIRA (or the approved project tracker) with sanitized reproduction details, expected/actual behavior, environment, severity, and priority. Do not include authentication secrets.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7. Schedule, Roles, and Risks</h2>
+        <table>
+          <thead><tr><th>Work item</th><th>Timing / owner</th><th>Dependency / output</th></tr></thead>
+          <tbody>
+            <tr><td>Requirement review and plan sign-off</td><td>Dates and approver TBD</td><td>Author answers; approved scope and exit criteria.</td></tr>
+            <tr><td>Environment, provider, and data readiness</td><td>Schedule/owners TBD</td><td>Non-production build, configured IdPs, test accounts, supported matrix.</td></tr>
+            <tr><td>Scenario execution and defect triage</td><td>Schedule/capacity TBD</td><td>Entry criteria met; P0/P1/P2 execution evidence and defect records.</td></tr>
+            <tr><td>Retest, regression, and closure report</td><td>Schedule/approver TBD</td><td>Fixes available; agreed exit thresholds and residual risk decision.</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Roles:</strong> QA owner, product/requirement author, authentication engineering, configured IdP administrator, and release approver are not named in the ticket. Assignees are unassigned.</p>
+        <table>
+          <thead><tr><th>Risk</th><th>Response / dependency</th></tr></thead>
+          <tbody>
+            <tr><td>Repeated historical automation runs were inconclusive: four checks blocked, 0 passed/0 failed (comments dated 10–20 Oct 2026).</td><td>Confirm current environment and access first; capture actual observations and distinguish environment blockers from product defects.</td></tr>
+            <tr><td>Wrong or inconsistent target URL could result in an invalid or unauthorized test.</td><td>Get a single approved non-production URL/build. Do not assume the reported production URLs are approved targets.</td></tr>
+            <tr><td>Provider/test-account or device setup unavailable.</td><td>Assign setup owner and readiness date; block dependent scenarios explicitly until provisioned.</td></tr>
+            <tr><td>Unclear failure behavior or sensitive-data handling may hide security/usability defects.</td><td>Resolve open questions and review defined messages/logging expectations before sign-off.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="review">
+        <h2>HUMAN REVIEW GATE — Required Before Approval</h2>
+        <ul>
+          <li><strong>Assumptions made:</strong> Only the written VWO-49 scope is planned; test environments are non-production unless explicitly approved; P0/P1/P2 labels are proposed risk prioritization; the supplied company context/logo are included as provided.</li>
+          <li><strong>Could not confirm:</strong> Approved environment/build, SSO providers and protocols, supported passkey matrix, identities/test data, exact error messages and redirect, UI order/design, accessibility/performance requirements, owner/approver, sprint dates, and release thresholds.</li>
+          <li><strong>Open questions blocking sign-off:</strong> Resolve the ambiguities in Section 3, especially the target environment, supported configurations, provider/test-account readiness, required failure behavior, and priority mismatch.</li>
+          <li><strong>Approval:</strong> QA/product owner to approve or edit this plan before test cases or automation are treated as approved. No execution result is inferred by this document.</li>
+        </ul>
+        <p><strong>Plan approval:</strong> Approver: ____________________ &nbsp; Date: ____________________ &nbsp; Decision: Pending</p>
+      </section>
+    </main>
+    <footer>VWO-49 Test Plan · Source: supplied Jira issue export and test-plan skill materials · Draft pending human review · Prepared 28 October 2026</footer>
+  </article>
+</body>
+</html>
