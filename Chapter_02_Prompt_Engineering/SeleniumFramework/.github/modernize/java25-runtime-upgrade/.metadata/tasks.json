@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Focused modernization task plan for upgrading the Selenium framework Java runtime to Java 25.",
+  "tasks": [
+    {
+      "type": "upgrade",
+      "id": "001-upgrade-java-runtime-to-25",
+      "description": "Upgrade the Selenium framework Java runtime and compiler target from Java 17 to Java 25 while preserving existing behavior.",
+      "reason": "The assessment identifies Java 17 as the project's current target, and the user explicitly requested a Java 25 runtime upgrade.",
+      "requirements": "Address assessment issue azure-java-version-02000 (“Java Version is not the latest LTS”), verified in pom.xml where maven.compiler.release is 17. Upgrade only the Java runtime/compiler target to Java 25. Update directly related build, runtime/toolchain, documentation, and configuration surfaces only where they exist, and preserve application and test behavior. Do not upgrade unrelated frameworks or dependencies, and do not include hardcoded-URL or Docker/containerization findings. Validate with a clean Maven verification build and the existing TestNG tests on JDK 25; report if that environment is unavailable.",
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    }
+  ],
+  "metadata": {
+    "planName": "java25-runtime-upgrade",
+    "projectName": "selenium-framework",
+    "language": "java",
+    "createdAt": "2026-11-01T17:28:07.216+05:30",
+    "version": "1.0"
+  }
+}

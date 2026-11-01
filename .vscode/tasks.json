@@ -1,0 +1,56 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Salesforce Selenium tests (headed)",
+			"type": "shell",
+			"command": "mvn",
+			"args": [
+				"-f",
+				"Chapter_02_Prompt_Engineering\\SeleniumFramework\\pom.xml",
+				"test",
+				"-Dheadless=false"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Check Java availability",
+			"type": "shell",
+			"command": "java",
+			"args": [
+				"-version"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Check Maven installers",
+			"type": "shell",
+			"command": "cmd.exe",
+			"args": [
+				"/c",
+				"where winget & where choco & where scoop"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Locate Maven installers and Chrome",
+			"type": "shell",
+			"command": "Get-Command",
+			"args": [
+				"winget",
+				"choco",
+				"scoop",
+				"chrome",
+				"msedge",
+				"-ErrorAction",
+				"SilentlyContinue"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

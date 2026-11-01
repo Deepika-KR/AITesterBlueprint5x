@@ -1,0 +1,128 @@
+{
+  "planHash": "59c604d9290b4c85e71c83ac268c194a3af0d7729be6c4e8a88ac31df460b79b",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-01T13:26:54.8895817Z",
+  "retryCount": 3,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 29354,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "typescript-no-emit",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm notice run vwo-playwright-framework@1.0.0 typecheck\r\nnpm notice run tsc --noEmit\r\n",
+        "durationMs": 5207
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm notice run vwo-playwright-framework@1.0.0 test\r\nnpm notice run playwright test --project=chromium --grep shows the login form and available recovery links\r\n\r\nRunning 1 test using 1 worker\r\n\r\n  ok 1 [chromium] \u203A tests\\login-valid.spec.ts:5:7 \u203A VWO login page \u203A shows the login form and available recovery links (9.2s)\r\n\r\n  1 passed (12.7s)\r\n",
+        "durationMs": 16291,
+        "testResults": {
+          "testFramework": "unknown",
+          "runnerDetectedFrom": "none",
+          "testsTotal": 0,
+          "testsPassed": 0,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": true
+        }
+      },
+      {
+        "name": "headed-chromium-smoke",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": false,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 1,
+        "outputSample": "npm notice run vwo-playwright-framework@1.0.0 test:headed\r\nnpm notice run playwright test --headed --project=chromium --grep shows the login form and available recovery links\r\n\r\nRunning 1 test using 1 worker\r\n\r\n  x  1 [chromium] \u203A tests\\login-valid.spec.ts:5:7 \u203A VWO login page \u203A shows the login form and available recovery links (22.8s)\r\n\r\n\r\n  1) [chromium] \u203A tests\\login-valid.spec.ts:5:7 \u203A VWO login page \u203A shows the login form and available recovery links \r\n\r\n    Error: expect(locator).toHaveCount(expected) failed\r\n\r\n    Locator:  locator(\u0027//a[contains(translate(normalize-space(.), \u0022ABCDEFGHIJKLMNOPQRSTUVWXYZ\u0022, \u0022abcdefghijklmnopqrstuvwxyz\u0022), \u0022start a free trial\u0022)]\u0027)\r\n    Expected: 1\r\n    Received: 2\r\n    Timeout:  5000ms\r\n\r\n    Call log:\r\n      - Expect \u0022toHaveCount\u0022 locator(\u0027//a[contains(translate(normalize-space(.), \u0022ABCDEFGHIJKLMNOPQRSTUVWXYZ\u0022, \u0022abcdefghijklmnopqrstuvwxyz\u0022), \u0022start a free trial\u0022)]\u0027) with timeout 5000ms\r\n      - waiting for locator(\u0027//a[contains(translate(normalize-space(.), \u0022ABCDEFGHIJKLMNOPQRSTUVWXYZ\u0022, \u0022abcdefghijklmnopqrstuvwxyz\u0022), \u0022start a free trial\u0022)]\u0027)\r\n        9 \u00D7 locator resolved to 2 elements\r\n          - unexpected value \u00222\u0022\r\n\r\n\r\n      11 |     await expect(loginPage.loginButton).toBeVisible();\r\n      12 |     await expect(loginPage.forgotPasswordButton).toBeVisible();\r\n    \u003E 13 |     await expect(loginPage.freeTrialLink).toHaveCount(1);\r\n         |                                           ^\r\n      14 |     await expect(loginPage.freeTrialLink).toBeVisible();\r\n      15 |   });\r\n      16 |\r\n        at C:\\Users\\Deepika\\OneDrive\\Documents\\AITesterBlueprint5x\\Chapter_02_Prompt_Engineering\\RICE_POT\\Template_RICE_POT\\PlaywrightFramework\\tests\\login-valid.spec.ts:13:43\r\n\r\n    attachment #1: screenshot (image/png) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n    test-results\\login-valid-VWO-login-page-38c03-nd-available-recovery-links-chromium\\test-failed-1.png\r\n    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n\r\n    attachment #2: browser-diagnostics.txt (text/plain) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n    [console:log] %cWARNING! color: red; background: yellow; font-size: 24px;\r\n    [console:log] %cThis section is intended for developers only. Do not enter or paste code that you do not understand. If someone told you to copy and paste something, kindly report this to security@wingify.com. font-size: 18px;...\r\n    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n\r\n    attachment #3: video (video/webm) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n    test-results\\login-valid-VWO-login-page-38c03-nd-available-recovery-links-chromium\\video.webm\r\n    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n\r\n    Error Context: test-results\\login-valid-VWO-login-page-38c03-nd-available-recovery-links-chromium\\error-context.md\r\n\r\n    attachment #5: trace (application/zip) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n    test-results\\login-valid-VWO-login-page-38c03-nd-available-recovery-links-chromium\\trace.zip\r\n    Usage:\r\n\r\n        npx playwright show-trace test-results\\login-valid-VWO-login-page-38c03-nd-available-recovery-links-chromium\\trace.zip\r\n\r\n    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\r\n\r\n  1 failed\r\n    [chromium] \u203A tests\\login-valid.spec.ts:5:7 \u203A VWO login page \u203A shows the login form and available recovery links \r\n",
+        "durationMs": 35168
+      }
+    ],
+    "executions": [
+      {
+        "source": "setup[0]",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "ci"
+        ],
+        "cwd": "C:\\Users\\Deepika\\OneDrive\\Documents\\AITesterBlueprint5x\\Chapter_02_Prompt_Engineering\\RICE_POT\\Template_RICE_POT\\PlaywrightFramework",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "setup[1]",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npx.CMD",
+        "args": [
+          "playwright",
+          "install",
+          "chromium"
+        ],
+        "cwd": "C:\\Users\\Deepika\\OneDrive\\Documents\\AITesterBlueprint5x\\Chapter_02_Prompt_Engineering\\RICE_POT\\Template_RICE_POT\\PlaywrightFramework",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "typescript-no-emit",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "typecheck"
+        ],
+        "cwd": "C:\\Users\\Deepika\\OneDrive\\Documents\\AITesterBlueprint5x\\Chapter_02_Prompt_Engineering\\RICE_POT\\Template_RICE_POT\\PlaywrightFramework",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "test",
+          "--",
+          "--project=chromium",
+          "--grep",
+          "shows the login form and available recovery links"
+        ],
+        "cwd": "C:\\Users\\Deepika\\OneDrive\\Documents\\AITesterBlueprint5x\\Chapter_02_Prompt_Engineering\\RICE_POT\\Template_RICE_POT\\PlaywrightFramework",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "headed-chromium-smoke",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "test:headed",
+          "--",
+          "--grep",
+          "shows the login form and available recovery links"
+        ],
+        "cwd": "C:\\Users\\Deepika\\OneDrive\\Documents\\AITesterBlueprint5x\\Chapter_02_Prompt_Engineering\\RICE_POT\\Template_RICE_POT\\PlaywrightFramework",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      }
+    ]
+  }
+}
