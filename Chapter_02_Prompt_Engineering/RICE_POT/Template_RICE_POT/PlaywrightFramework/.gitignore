@@ -1,6 +1,13 @@
 node_modules/
-.env
 test-results/
 playwright-report/
 allure-results/
 allure-report/
+
+# Environment variables
+.env
+**/.env
+
+# Other environment files
+.env.*
+!.env.example
